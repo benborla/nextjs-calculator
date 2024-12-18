@@ -6,18 +6,6 @@ interface Props {
   children: ReactNode
 }
 
-type Operation = '+' | '-' | '*' | '/'
-
-interface CalculatorState {
-  display: string
-  handleNumber: (num: string) => void
-  handleOperation: (op: Operation) => void
-  handleEquals: () => void
-  handleClear: () => void
-  handleSignedValue: () => void
-  handlePercentage: () => void
-}
-
 export const CalculatorContext = createContext<CalculatorState | undefined>(undefined)
 
 export const CalculatorProvider = ({ children }: Props) => {
