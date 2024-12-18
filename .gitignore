@@ -42,3 +42,8 @@ next-env.d.ts
 
 .DS_Store
 **/.DS_Store
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
