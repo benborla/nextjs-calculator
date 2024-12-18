@@ -6,6 +6,18 @@ interface Props {
   children: ReactNode
 }
 
+type Operation = '+' | '-' | '*' | '/'
+
+interface CalculatorState {
+  display: string
+  handleNumber: (num: string) => void
+  handleOperation: (op: Operation) => void
+  handleEquals: () => void
+  handleClear: () => void
+  handleSignedValue: () => void
+  handlePercentage: () => void
+}
+
 export const CalculatorContext = createContext<CalculatorState | undefined>(undefined)
 
 export const CalculatorProvider = ({ children }: Props) => {
@@ -91,12 +103,33 @@ export const CalculatorProvider = ({ children }: Props) => {
     setNewNumber(true)
   }
 
+  const handleSignedValue = () => {
+    const currentValue = parseFloat(display)
+    setDisplay((-currentValue).toString())
+  }
+
+  const handlePercentage = () => {
+    const currentValue = parseFloat(display)
+    
+    if (stack.length === 0) {
+      setDisplay((currentValue / 100).toString())
+    } else {
+      const previousValue = stack[stack.length - 1].value
+      const percentageValue = (previousValue * currentValue) / 100
+      setDisplay(percentageValue.toString())
+    }
+    
+    setNewNumber(true)
+  }
+
   const value = {
     display,
     handleNumber,
     handleOperation,
     handleEquals,
     handleClear,
+    handleSignedValue,
+    handlePercentage,
   }
 
   return (

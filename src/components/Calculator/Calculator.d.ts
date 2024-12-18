@@ -6,4 +6,6 @@ interface CalculatorState {
   handleOperation: (op: Operation) => void
   handleEquals: () => void
   handleClear: () => void
+  handleSignedValue: () => void
+  handlePercentage: () => void
 }

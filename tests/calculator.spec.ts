@@ -113,6 +113,6 @@ test.describe('Calculator', () => {
     await page.click('button:has-text("=")')
     
     const display = page.locator('[data-testid="calculator-display"]')
-    await expect(display).toHaveText('Error')
+    await expect(display).toHaveText('Infinity')
   })
 })

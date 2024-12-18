@@ -10,6 +10,8 @@ const Calculator = () => {
     handleOperation,
     handleEquals,
     handleClear,
+    handleSignedValue,
+    handlePercentage,
   } = useCalculator()
 
   return (
@@ -24,8 +26,8 @@ const Calculator = () => {
         <div className="grid grid-cols-4 gap-2">
           {/* Row 1 */}
           <Button size="calc" variant="secondary" onClick={handleClear}>AC</Button>
-          <Button size="calc" variant="secondary">+/-</Button>
-          <Button size="calc" variant="secondary">%</Button>
+          <Button size="calc" variant="secondary" onClick={handleSignedValue}>+/-</Button>
+          <Button size="calc" variant="secondary" onClick={handlePercentage}>%</Button>
           <Button size="calc" variant="destructive" onClick={() => handleOperation('/')}>÷</Button>
 
           {/* Row 2 */}
