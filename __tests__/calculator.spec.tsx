@@ -101,12 +101,15 @@ describe('Calculator', () => {
   })
 
   test('handles percentage calculations', () => {
+    fireEvent.click(screen.getByText('2'))
+    fireEvent.click(screen.getByText('5'))
+    fireEvent.click(screen.getByText('%'))
     fireEvent.click(screen.getByText('1'))
     fireEvent.click(screen.getByText('0'))
     fireEvent.click(screen.getByText('0'))
-    fireEvent.click(screen.getByText('%'))
+    fireEvent.click(screen.getByText('='))
     
-    expect(screen.getByTestId('calculator-display')).toHaveTextContent('1')
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent('25')
   })
 
   test('handles division by zero', () => {
