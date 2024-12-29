@@ -14,6 +14,7 @@ export const CalculatorProvider = ({ children }: Props) => {
   const [newNumber, setNewNumber] = useState(true)
   const [waitingForPercentageInput, setWaitingForPercentageInput] = useState<boolean>(false)
   const [percentageBaseValue, setPercentageBaseValue] = useState<number | null>(null)
+  const [isRadiantMode, setIsRadiantMode] = useState<boolean>(true)
 
   const calculateStack = (currentStack: Array<{ value: number; operation: Operation }>, currentValue: number): number => {
     if (currentStack.length === 0) return currentValue
@@ -54,12 +55,20 @@ export const CalculatorProvider = ({ children }: Props) => {
   }
 
   const handleNumber = (num: string) => {
+    const isDecimal = num === '.'
+    const hasDecimal = display.includes('.')
+
     if (newNumber) {
-      setDisplay(num)
+      setDisplay(isDecimal ? '0.' : num)
       setNewNumber(false)
-    } else {
-      setDisplay(display === '0' ? num : display + num)
+      return
     }
+
+    if (isDecimal && hasDecimal) {
+      return
+    }
+
+    setDisplay(display === '0' && !isDecimal ? num : display + num)
   }
 
   const handleOperation = (op: Operation) => {
@@ -120,7 +129,44 @@ export const CalculatorProvider = ({ children }: Props) => {
     setWaitingForPercentageInput(true)
   }
 
-  
+  const handleToggleRadiantMode = () => setIsRadiantMode(!isRadiantMode)
+
+  const handleSquareRoot = () => {
+    setDisplay(Math.sqrt(parseFloat(display)).toString())
+  }
+
+  const handleSquared = () => {
+    setDisplay(Math.pow(parseFloat(display), 2).toString())
+  }
+
+  const handleCubic = () => {
+    setDisplay(Math.pow(parseFloat(display), 3).toString())
+  }
+
+  const handleSine = () => {
+    const currentValue = parseFloat(display)
+    const result = isRadiantMode ? Math.sin(currentValue) 
+      : Math.sin((currentValue * Math.PI) / 180)
+    setDisplay(result.toString())
+  }
+
+  const handleCosine = () => {
+    const currentValue = parseFloat(display)
+    const result = isRadiantMode ? Math.cos(currentValue) 
+      : Math.cos((currentValue * Math.PI) / 180)
+    setDisplay(result.toString())
+  }
+
+  const handleTangent = () => {
+    const currentValue = parseFloat(display)
+    const result = isRadiantMode ? Math.tan(currentValue) 
+      : Math.tan((currentValue * Math.PI) / 180)
+    setDisplay(result.toString())
+  }
+
+  const handleLogarithm = () => {
+    setDisplay(Math.log10(parseFloat(display)).toString())
+  }
 
   const value = {
     display,
@@ -130,6 +176,15 @@ export const CalculatorProvider = ({ children }: Props) => {
     handleClear,
     handleSignedValue,
     handlePercentage,
+    isRadiantMode,
+    handleToggleRadiantMode,
+    handleSquareRoot,
+    handleSquared,
+    handleCubic,
+    handleSine,
+    handleCosine,
+    handleTangent,
+    handleLogarithm,
   }
 
   return (

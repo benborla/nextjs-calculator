@@ -120,4 +120,90 @@ describe('Calculator', () => {
     
     expect(screen.getByTestId('calculator-display')).toHaveTextContent('Infinity')
   })
+
+  test('handle logarithmic operartion', () => {
+    fireEvent.click(screen.getByText('5'))
+    fireEvent.click(screen.getByText('log'))
+    const equiv = Math.log10(5)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle sine operartion', () => {
+    fireEvent.click(screen.getByText('5'))
+    fireEvent.click(screen.getByText('sin'))
+    const equiv = Math.sin(5)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle sine on degree operartion', () => {
+    fireEvent.click(screen.getByText('RAD'))
+    fireEvent.click(screen.getByText('5'))
+    fireEvent.click(screen.getByText('sin'))
+    const equiv = Math.sin((5 * Math.PI) / 180)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle cosine operartion', () => {
+    fireEvent.click(screen.getByText('7'))
+    fireEvent.click(screen.getByText('cos'))
+    const equiv = Math.cos(7)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle cosine on degree operartion', () => {
+    fireEvent.click(screen.getByText('RAD'))
+    fireEvent.click(screen.getByText('7'))
+    fireEvent.click(screen.getByText('1'))
+    fireEvent.click(screen.getByText('cos'))
+    const equiv = Math.cos((71 * Math.PI) / 180)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle tangent operartion', () => {
+    fireEvent.click(screen.getByText('2'))
+    fireEvent.click(screen.getByText('0'))
+    fireEvent.click(screen.getByText('tan'))
+    const equiv = Math.tan(20)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+  test('handle tangent on degree operartion', () => {
+    fireEvent.click(screen.getByText('RAD'))
+    fireEvent.click(screen.getByText('8'))
+    fireEvent.click(screen.getByText('1'))
+    fireEvent.click(screen.getByText('tan'))
+    const equiv = Math.tan((81 * Math.PI) / 180)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+  })
+
+  test('handle squared notation', () => {
+    fireEvent.click(screen.getByText('9'))
+    fireEvent.click(screen.getByText('x²'))
+    const equiv = Math.pow(9, 2)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+  })
+
+  test('handle cubed notation', () => {
+    fireEvent.click(screen.getByText('9'))
+    fireEvent.click(screen.getByText('x³'))
+    const equiv = Math.pow(9, 3)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+  })
+
+  test('handle square root notation', () => {
+    fireEvent.click(screen.getByText('2'))
+    fireEvent.click(screen.getByText('7'))
+    fireEvent.click(screen.getByText('√'))
+    const equiv = Math.sqrt(27)
+    expect(screen.getByTestId('calculator-display')).toHaveTextContent(equiv.toString())
+
+  })
+
+
 })
