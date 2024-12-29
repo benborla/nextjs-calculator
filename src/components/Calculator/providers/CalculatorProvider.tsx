@@ -12,6 +12,8 @@ export const CalculatorProvider = ({ children }: Props) => {
   const [display, setDisplay] = useState('0')
   const [stack, setStack] = useState<Array<{ value: number; operation: Operation }>>([])
   const [newNumber, setNewNumber] = useState(true)
+  const [waitingForPercentageInput, setWaitingForPercentageInput] = useState<boolean>(false)
+  const [percentageBaseValue, setPercentageBaseValue] = useState<number | null>(null)
 
   const calculateStack = (currentStack: Array<{ value: number; operation: Operation }>, currentValue: number): number => {
     if (currentStack.length === 0) return currentValue
@@ -76,6 +78,18 @@ export const CalculatorProvider = ({ children }: Props) => {
 
   const handleEquals = () => {
     const currentValue = parseFloat(display)
+
+    // @INFO: Since I don't want to have a stack operation when calculating a percentage
+    if (waitingForPercentageInput && percentageBaseValue !== null) {
+      const percentageResult = percentageBaseValue * (currentValue / 100)
+
+      setDisplay(percentageResult.toString())
+      setWaitingForPercentageInput(false)
+      setPercentageBaseValue(null)
+      setNewNumber(true)
+
+      return
+    }
     
     if (stack.length === 0) return
     
@@ -89,6 +103,8 @@ export const CalculatorProvider = ({ children }: Props) => {
     setDisplay('0')
     setStack([])
     setNewNumber(true)
+    setWaitingForPercentageInput(false)
+    setPercentageBaseValue(null)
   }
 
   const handleSignedValue = () => {
@@ -98,17 +114,13 @@ export const CalculatorProvider = ({ children }: Props) => {
 
   const handlePercentage = () => {
     const currentValue = parseFloat(display)
-    
-    if (stack.length === 0) {
-      setDisplay((currentValue / 100).toString())
-    } else {
-      const previousValue = stack[stack.length - 1].value
-      const percentageValue = (previousValue * currentValue) / 100
-      setDisplay(percentageValue.toString())
-    }
-    
+    setPercentageBaseValue(currentValue)
+    setDisplay('0')
     setNewNumber(true)
+    setWaitingForPercentageInput(true)
   }
+
+  
 
   const value = {
     display,

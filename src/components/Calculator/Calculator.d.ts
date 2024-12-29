@@ -1,4 +1,4 @@
-type Operation = '+' | '-' | '*' | '/' | ''
+type Operation = '+' | '-' | '*' | '/' | '%' | ''
 
 interface CalculatorState {
   display: string

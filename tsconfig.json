@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES2021",
+    "types": [
+      "jest",
+      "node",
+      "@testing-library/jest-dom"
+    ],
     "lib": [
       "ES2021",
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
     ],
     "allowJs": true,
     "skipLibCheck": true,
